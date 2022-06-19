@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { insert, deleteBook, getBook, update} from '../database/queries';
+import user from './user';
 
 const router: Router = Router();
 
 router.post('/insert', (req, res) => {
   const { bookName } = req.body;
   insert(bookName)
-    .then((data) => {
+    .then(() => {
       res.send('Inserted');
     })
     .catch(err => {
@@ -16,6 +17,7 @@ router.post('/insert', (req, res) => {
 
 router.get('/get', (req, res) => {
   const { bookName } : {bookName?: string} = req.query;
+  
   if (!bookName) {
     res.send('No book name');
   }
@@ -34,13 +36,10 @@ router.delete('/delete', (req, res) => {
   deleteBook(bookName)
     .then(() => {
       res.send('Deleted');
-    }
-    ).catch((err) => {
+    }).catch((err) => {
       res.send(err);
-    }
-    );
-}
-);
+    });
+});
 
 router.patch('/update', (req, res) => {
   const { bookName, newName }: {bookName: string, newName: string} = req.body;
@@ -59,5 +58,7 @@ router.patch('/update', (req, res) => {
     );
 }
 );
+
+router.use('/user', user);
 
 export default router;

@@ -1,4 +1,4 @@
-import db from '../config';
+import db from '../../config';
 
 const insert = (bookName: string) => {
   return db.promise().query('INSERT INTO book (name) VALUES (?)', [bookName]);
