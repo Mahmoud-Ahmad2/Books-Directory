@@ -7,13 +7,13 @@ import { JwtPayload } from 'jsonwebtoken';
 const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
+    
     await loginValidation({
       email, password,
     });
-
+    
     const [checkEmail]: any = await getByEmail(email);
-
+    
     if (checkEmail.length === 0) {
       throw new Error('Email does not exist');
     } 
@@ -25,7 +25,7 @@ const login = async (req: Request, res: Response) => {
     }
     
     const payload: JwtPayload = {
-      email,
+      id: checkEmail[0].id,
     };
 
     const token = await signToken(payload);

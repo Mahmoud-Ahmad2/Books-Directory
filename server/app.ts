@@ -16,4 +16,5 @@ app.use(compression());
 app.use(cookieParser());
 
 app.use(router);
+
 export default app;
